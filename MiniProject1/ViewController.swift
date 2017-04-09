@@ -11,17 +11,17 @@ import UIKit
 class ViewController: UIViewController {
     let members: [String] = ["Jessica Cherny", "Kevin Jiang", "Jared Gutierrez", "Kristin Ho", "Christine Munar", "Mudit Mittal", "Richard Hu", "Shaan Appel", "Edward Liu", "Wilbur Shi", "Young Lin", "Abhinav Koppu", "Abhishek Mangla", "Akkshay Khoslaa", "Andy Wang", "Aneesh Jindal", "Anisha Salunkhe", "Ashwin Vaidyanathan", "Cody Hsieh", "Justin Kim", "Krishnan Rajiyah", "Lisa Lee", "Peter Schafhalter", "Sahil Lamba", "Sirjan Kafle", "Tarun Khasnavis", "Billy Lu", "Aayush Tyagi", "Ben Goldberg", "Candice Ye", "Eliot Han", "Emaan Hariri", "Jessica Chen", "Katharine Jiang", "Kedar Thakkar", "Leon Kwak", "Mohit Katyal", "Rochelle Shen", "Sayan Paul", "Sharie Wang", "Shreya Reddy", "Shubham Goenka", "Victor Sun", "Vidya Ravikumar"];
 
-
-    
-    @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var personImage: UIImageView!
-    @IBOutlet weak var statsPicture: UIButton!
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var option1Label: UIButton!
-    @IBOutlet weak var option2Label: UIButton!
-    @IBOutlet weak var option3Label: UIButton!
-    @IBOutlet weak var option4Label: UIButton!
-    @IBOutlet weak var stopButton: UIButton!
+    var scoreLabel: UILabel!
+    var personImage: UIImageView!
+    var statsPicture: UIButton!
+    var timerLabel: UILabel!
+    var option1Label: UIButton!
+    var option2Label: UIButton!
+    var option3Label: UIButton!
+    var option4Label: UIButton!
+    var stopButton: UIButton!
+    var pointsLabel: UILabel!
+    var secondsLabel: UILabel!
     
     var name: String = ""
     var streak: Int = 0
@@ -43,32 +43,114 @@ class ViewController: UIViewController {
         static let keepScore = "KeepScore"
     }
     
-    @IBAction func option1Button(_ sender: Any) {
-        submit(option1Label.currentTitle!, btnNumber: 1, btn: option1Label)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupLayout()
+        setupGame()
     }
     
-    @IBAction func option2Button(_ sender: Any) {
-        submit(option2Label.currentTitle!, btnNumber: 2, btn: option2Label)
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func option3Button(_ sender: Any) {
-        submit(option3Label.currentTitle!, btnNumber: 3, btn: option3Label)
+    func setupLayout() {
+        view.backgroundColor = Constants.mainBackgroundColor
+        
+        scoreLabel = UILabel(frame: CGRect(x: view.frame.width/2 - 15, y: (navigationController?.navigationBar.frame.maxY)! + 5, width: 35, height: 45))
+        scoreLabel.text = "\(score)"
+        scoreLabel.textAlignment = .center
+        scoreLabel.adjustsFontSizeToFitWidth = true
+        scoreLabel.textColor = UIColor.white
+        scoreLabel.font = UIFont(name: "Arial", size: 40)
+        
+        personImage = UIImageView(frame: CGRect(x: 50, y: scoreLabel.frame.maxY + 30, width: view.frame.height/2 - (navigationController?.navigationBar.frame.height)!, height: view.frame.height/2 - (navigationController?.navigationBar.frame.height)!))
+        personImage.layer.cornerRadius = personImage.frame.size.width/2;
+        personImage.clipsToBounds = true;
+        
+        statsPicture = UIButton(frame: CGRect(x: view.frame.maxX - 50, y: (navigationController?.navigationBar.frame.maxY)!, width: 50, height: 50))
+        statsPicture.setImage(#imageLiteral(resourceName: "bargraph"), for: .normal)
+        statsPicture.addTarget(self, action: #selector(goToStats), for: .touchUpInside)
+        
+        stopButton = UIButton(frame: CGRect(x: 10, y: (navigationController?.navigationBar.frame.maxY)! + 10, width: 35, height: 35))
+        stopButton.setImage(#imageLiteral(resourceName: "stop"), for: .normal)
+        stopButton.addTarget(self, action: #selector(stopGame), for: .touchUpInside)
+        
+        timerLabel = UILabel(frame: CGRect(x: view.frame.width/2 - 15, y: personImage.frame.maxY + 30, width: 30, height: 45))
+        timerLabel.textColor = UIColor.white
+        timerLabel.textAlignment = .center
+        timerLabel.font = UIFont(name: "Arial", size: 35)
+        
+        option1Label = UIButton(frame: CGRect(x: 10, y: timerLabel.frame.maxY + 40, width: view.frame.width/2 - 20, height: 30))
+        option1Label.setTitleColor(UIColor.white, for: .normal)
+        option1Label.backgroundColor = Constants.mainBackgroundColor
+        option1Label.titleLabel?.adjustsFontSizeToFitWidth = true
+        option1Label.titleLabel?.textAlignment = .center
+        option1Label.addTarget(self, action: #selector(nameClicked(withSender:)), for: .touchUpInside)
+        option1Label.titleLabel?.font = UIFont(name: "Arial", size: 24)
+        
+        option2Label = UIButton(frame: CGRect(x: option1Label.frame.maxX + 10, y: timerLabel.frame.maxY + 40, width: view.frame.width/2 - 20, height: 30))
+        option2Label.setTitleColor(UIColor.white, for: .normal)
+        option2Label.backgroundColor = Constants.mainBackgroundColor
+        option2Label.titleLabel?.adjustsFontSizeToFitWidth = true
+        option2Label.titleLabel?.textAlignment = .center
+        option2Label.titleLabel?.font = UIFont(name: "Arial", size: 24)
+        option2Label.addTarget(self, action: #selector(nameClicked(withSender:)), for: .touchUpInside)
+        
+        option3Label = UIButton(frame: CGRect(x: 10, y: option1Label.frame.maxY + 20, width: view.frame.width/2 - 20, height: 30))
+        option3Label.setTitleColor(UIColor.white, for: .normal)
+        option3Label.backgroundColor = Constants.mainBackgroundColor
+        option3Label.titleLabel?.adjustsFontSizeToFitWidth = true
+        option3Label.titleLabel?.textAlignment = .center
+        option3Label.titleLabel?.font = UIFont(name: "Arial", size: 24)
+        option3Label.addTarget(self, action: #selector(nameClicked(withSender:)), for: .touchUpInside)
+        
+        option4Label = UIButton(frame: CGRect(x: option3Label.frame.maxX + 10, y: option1Label.frame.maxY + 20, width: view.frame.width/2 - 20, height: 30))
+        option4Label.setTitleColor(UIColor.white, for: .normal)
+        option4Label.backgroundColor = Constants.mainBackgroundColor
+        option4Label.titleLabel?.adjustsFontSizeToFitWidth = true
+        option4Label.titleLabel?.textAlignment = .center
+        option4Label.titleLabel?.font = UIFont(name: "Arial", size: 24)
+        option4Label.addTarget(self, action: #selector(nameClicked(withSender:)), for: .touchUpInside)
+        
+        pointsLabel = UILabel(frame: CGRect(x: view.frame.width/2 - 40, y: scoreLabel.frame.maxY, width: 90, height: 20))
+        pointsLabel.text = "Total Points"
+        pointsLabel.textAlignment = .center
+        pointsLabel.adjustsFontSizeToFitWidth = true
+        pointsLabel.textColor = UIColor.white
+        
+        secondsLabel = UILabel(frame: CGRect(x: view.frame.width/2 - 15, y: timerLabel.frame.maxY, width: timerLabel.frame.width, height: 20))
+        secondsLabel.text = "sec"
+        secondsLabel.textAlignment = .center
+        secondsLabel.adjustsFontSizeToFitWidth = true
+        secondsLabel.textColor = UIColor.white
+        
+        view.addSubview(scoreLabel)
+        view.addSubview(personImage)
+        view.addSubview(statsPicture)
+        view.addSubview(stopButton)
+        view.addSubview(timerLabel)
+        view.addSubview(option1Label)
+        view.addSubview(option2Label)
+        view.addSubview(option3Label)
+        view.addSubview(option4Label)
+        view.addSubview(pointsLabel)
+        view.addSubview(secondsLabel)
     }
     
-    @IBAction func option4Button(_ sender: Any) {
-        submit(option4Label.currentTitle!, btnNumber: 4, btn: option4Label)
-    }
-    
-    @IBAction func statsButton(_ sender: Any) {
+    func goToStats() {
         let defaults = UserDefaults.standard
         
         timer.invalidate()
         gameTimer.invalidate()
         
         defaults.setValue(true, forKey: defaultsKeys.keepScore)
+        
+        navigationController?.pushViewController(StatsViewController(), animated: true)
     }
     
-    @IBAction func stopButton(_ sender: Any) {
+    func stopGame() {
         let defaults = UserDefaults.standard
         
         timer.invalidate()
@@ -111,7 +193,10 @@ class ViewController: UIViewController {
         defaults.synchronize()
     }
     
-    func submit(_ guessedName: String?, btnNumber: Int, btn: UIButton?) {
+    func nameClicked(withSender sender: UIButton?) {
+        let guessedName = sender?.currentTitle!
+        let btn = sender
+        
         gameTimer.invalidate()
         var callWaitASecond = true
         
@@ -120,15 +205,15 @@ class ViewController: UIViewController {
                 //you got it right
                 streak += 1
                 score += 1
-                scoreLabel.text = "Score: \(score)"
+                scoreLabel.text = "\(score)"
                 //change button to green
-                btn!.backgroundColor = UIColor.green
+                btn?.backgroundColor = UIColor.green
             } else {
                 //You got it wrong
                 streak = 0
                 
                 //change button to red
-                btn!.backgroundColor = UIColor.red
+                btn?.backgroundColor = UIColor.red
             }
         } else {
             streak = 0
@@ -176,7 +261,7 @@ class ViewController: UIViewController {
     }
     
     func outOfTime() {
-        submit(nil, btnNumber: 0, btn: nil)
+        nameClicked(withSender: nil)
     }
     
     func handleTimer() {
@@ -188,19 +273,19 @@ class ViewController: UIViewController {
     }
     
     func setupGame() {
+        option1Label.backgroundColor = Constants.mainBackgroundColor
+        option2Label.backgroundColor = Constants.mainBackgroundColor
+        option3Label.backgroundColor = Constants.mainBackgroundColor
+        option4Label.backgroundColor = Constants.mainBackgroundColor
+        
         let defaults = UserDefaults.standard
         if defaults.bool(forKey: defaultsKeys.keepScore) {
             score = defaults.integer(forKey: defaultsKeys.points)
-            scoreLabel.text = "Score: \(score)"
+            scoreLabel.text = "\(score)"
         }
         
         timeLeft = 5
         timerLabel.text = "\(timeLeft)"
-        
-        option1Label.backgroundColor = UIColor(red: 0.67, green: 0, blue: 0.3, alpha: 1.0)
-        option2Label.backgroundColor = UIColor(red: 0.67, green: 0, blue: 0.3, alpha: 1.0)
-        option3Label.backgroundColor = UIColor(red: 0.67, green: 0, blue: 0.3, alpha: 1.0)
-        option4Label.backgroundColor = UIColor(red: 0.67, green: 0, blue: 0.3, alpha: 1.0)
         
         name = getName()
         
@@ -214,20 +299,6 @@ class ViewController: UIViewController {
         //Handle time stuff
         gameTimer = Timer.scheduledTimer(timeInterval:1.0, target: self, selector: #selector(handleTimer), userInfo: nil, repeats: true)
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        scoreLabel.text = "Score: \(score)"
-        stopButton.addTarget(self, action: #selector(getter: ViewController.stopButton), for: .touchUpInside)
-        statsPicture.addTarget(self, action: #selector(ViewController.statsButton), for: .touchUpInside)
-        setupGame()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
+    
 }
 

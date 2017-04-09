@@ -14,6 +14,7 @@
 		16BDED4F1E4D07B400D624C7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16BDED4D1E4D07B400D624C7 /* LaunchScreen.storyboard */; };
 		16BDED5A1E4D07B400D624C7 /* MiniProject1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BDED591E4D07B400D624C7 /* MiniProject1Tests.swift */; };
 		16BDED651E4D07B400D624C7 /* MiniProject1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BDED641E4D07B400D624C7 /* MiniProject1UITests.swift */; };
+		51B1E2491E987EC200A8427D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B1E2481E987EC200A8427D /* Constants.swift */; };
 		51E7FC161E4D4F6300AA3C48 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E7FC151E4D4F6300AA3C48 /* StartViewController.swift */; };
 		51E7FC181E4D603A00AA3C48 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E7FC171E4D603A00AA3C48 /* StatsViewController.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 		16BDED601E4D07B400D624C7 /* MiniProject1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiniProject1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		16BDED641E4D07B400D624C7 /* MiniProject1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniProject1UITests.swift; sourceTree = "<group>"; };
 		16BDED661E4D07B400D624C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		51B1E2481E987EC200A8427D /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		51E7FC151E4D4F6300AA3C48 /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		51E7FC171E4D603A00AA3C48 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,6 +106,7 @@
 				16BDED441E4D07B400D624C7 /* AppDelegate.swift */,
 				16BDED461E4D07B400D624C7 /* ViewController.swift */,
 				51E7FC171E4D603A00AA3C48 /* StatsViewController.swift */,
+				51B1E2481E987EC200A8427D /* Constants.swift */,
 				16BDED481E4D07B400D624C7 /* Main.storyboard */,
 				51E7FC151E4D4F6300AA3C48 /* StartViewController.swift */,
 				16BDED4B1E4D07B400D624C7 /* Assets.xcassets */,
@@ -199,7 +202,7 @@
 				TargetAttributes = {
 					16BDED401E4D07B300D624C7 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = K5SQ49A4VN;
+						DevelopmentTeam = 2R645SJG33;
 						ProvisioningStyle = Automatic;
 					};
 					16BDED541E4D07B400D624C7 = {
@@ -266,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51B1E2491E987EC200A8427D /* Constants.swift in Sources */,
 				16BDED471E4D07B400D624C7 /* ViewController.swift in Sources */,
 				16BDED451E4D07B400D624C7 /* AppDelegate.swift in Sources */,
 				51E7FC181E4D603A00AA3C48 /* StatsViewController.swift in Sources */,
@@ -421,10 +425,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K5SQ49A4VN;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 2R645SJG33;
 				INFOPLIST_FILE = MiniProject1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shireen.daniel.MiniProject1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shireen.MiniProject1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -434,10 +439,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K5SQ49A4VN;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 2R645SJG33;
 				INFOPLIST_FILE = MiniProject1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.shireen.daniel.MiniProject1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shireen.MiniProject1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
